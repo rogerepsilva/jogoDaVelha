@@ -35,12 +35,12 @@ public class JogoDaVelha {
 
             for (int l = 0; l < tabuleiro.length; l++) {
                 for (int c = 0; c < tabuleiro[l].length; c++) {
-                    if (c < 2) {
+                    if (c <= 2) {
                         System.out.print(tabuleiro[l][c] + "  | ");
                     }
                 }
                 System.out.println();
-                if (l < 2) {
+                if (l <= 2) {
                     System.out.println("---+----+---");
                 }
             }
@@ -59,34 +59,46 @@ public class JogoDaVelha {
             System.out.print("Coluna: ");
             this.setEscolhaColuna(scan.nextInt() - 1);
 
-            if (tabuleiro[this.getEscolhaLinha()][this.getEscolhaColuna()] == " ") {
-                tabuleiro[this.getEscolhaLinha()][this.getEscolhaColuna()] = this.getSinal();
-                this.setJogadas(this.getJogadas() + 1);
+            if (this.getEscolhaLinha() >= 0 && this.getEscolhaLinha() <= 2) {
+                if (this.getEscolhaLinha() >= 0 && this.getEscolhaLinha() <= 2) {
+
+                    if (tabuleiro[this.getEscolhaLinha()][this.getEscolhaColuna()] == " ") {
+                        tabuleiro[this.getEscolhaLinha()][this.getEscolhaColuna()] = this.getSinal();
+                        this.setJogadas(this.getJogadas() + 1);
+                    } else {
+                        System.out.println("Jogada inválida, posição já marcada.");
+                    }
+
+                    if ((tabuleiro[0][0] == this.getSinal() && tabuleiro[1][0] == this.getSinal()
+                            && tabuleiro[2][0] == this.getSinal()) // Coluna 01
+                            || (tabuleiro[0][1] == this.getSinal() && tabuleiro[1][1] == this.getSinal()
+                                    && tabuleiro[2][1] == this.getSinal()) // Coluna 02
+                            || (tabuleiro[0][2] == this.getSinal() && tabuleiro[1][2] == this.getSinal()
+                                    && tabuleiro[2][2] == this.getSinal())
+                            // Coluna 03
+                            || (tabuleiro[0][0] == this.getSinal() && tabuleiro[0][1] == this.getSinal()
+                                    && tabuleiro[0][2] == this.getSinal()) // Linha 01
+                            || (tabuleiro[1][0] == this.getSinal() && tabuleiro[1][1] == this.getSinal()
+                                    && tabuleiro[1][2] == this.getSinal()) // Linha 02
+                            || (tabuleiro[2][0] == this.getSinal() && tabuleiro[2][1] == this.getSinal()
+                                    && tabuleiro[2][2] == this.getSinal()) // Linha 03
+                            || (tabuleiro[0][0] == this.getSinal() && tabuleiro[1][1] == this.getSinal()
+                                    && tabuleiro[2][2] == this.getSinal()) // Diagonal primária
+                            || (tabuleiro[0][2] == this.getSinal() && tabuleiro[1][1] == this.getSinal()
+                                    && tabuleiro[2][0] == this.getSinal())) // Diagonal secundária
+                    { // VERIFICAR OS SINAIS IGUAIS
+                        System.out.println("O jogador " + this.getVez() + " ganhou!");
+                        this.setFlag(true);
+                    }
+                  
+
+                } else {
+                    System.out.println("Jogada inválida.");
+                }
             } else {
-                System.out.println("Jogada inválida, posição já marcada.");
+                System.out.println("Jogada inválida.");
             }
 
-            if ((tabuleiro[0][0] == this.getSinal() && tabuleiro[1][0] == this.getSinal()
-                    && tabuleiro[2][0] == this.getSinal()) // Coluna 01
-                    || (tabuleiro[0][1] == this.getSinal() && tabuleiro[1][1] == this.getSinal()
-                            && tabuleiro[2][1] == this.getSinal()) // Coluna 02
-                    || (tabuleiro[0][2] == this.getSinal() && tabuleiro[1][2] == this.getSinal()
-                            && tabuleiro[2][2] == this.getSinal())
-                    // Coluna 03
-                    || (tabuleiro[0][0] == this.getSinal() && tabuleiro[0][1] == this.getSinal()
-                            && tabuleiro[0][2] == this.getSinal()) // Linha 01
-                    || (tabuleiro[1][0] == this.getSinal() && tabuleiro[1][1] == this.getSinal()
-                            && tabuleiro[1][2] == this.getSinal()) // Linha 02
-                    || (tabuleiro[2][0] == this.getSinal() && tabuleiro[2][1] == this.getSinal()
-                            && tabuleiro[2][2] == this.getSinal()) // Linha 03
-                    || (tabuleiro[0][0] == this.getSinal() && tabuleiro[1][1] == this.getSinal()
-                            && tabuleiro[2][2] == this.getSinal()) // Diagonal primária
-                    || (tabuleiro[0][2] == this.getSinal() && tabuleiro[1][1] == this.getSinal()
-                            && tabuleiro[2][0] == this.getSinal())) // Diagonal secundária
-            { // VERIFICAR OS SINAIS IGUAIS
-                System.out.println("O jogador " + this.getVez() + " ganhou!");
-                this.setFlag(true);
-            }
         }
     }
 
